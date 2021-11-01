@@ -1,0 +1,48 @@
+import { RestaurantAttributes, RestaurantCreationAttributes } from './db/models/restaurant.model';
+import { DishAttributes, DishCreationAttributes } from './db/models/dish.model';
+import { UserAttributes } from './db/models/user.model';
+import { OrderCreationAttributes } from './db/models/order.model';
+
+export type UserRoles = 'user' | 'admin';
+
+export interface IClientData {
+    id: number;
+    role: UserRoles;
+}
+
+export interface CreateRestaurantRequest {
+    body: {
+        restaurant: RestaurantCreationAttributes,
+        dishes?: DishCreationAttributes[],
+    }
+}
+
+export interface UpdateRestaurantRequest {
+    body: Partial<RestaurantAttributes> & Pick<RestaurantAttributes, 'id'>,
+}
+
+export interface UpdateDishRequest {
+    body: Partial<DishAttributes> & Pick<DishAttributes, 'id'>,
+}
+
+export interface CreateUserRequest {
+    body: Omit<UserAttributes, 'id' | 'role'>
+}
+
+export interface CreateOrderRequest {
+    body: OrderCreationAttributes & { dishIDs: Array<DishAttributes['id']> }
+}
+
+// Cookie Properties
+export const cookieProps = Object.freeze({
+    key: 'ExpressGeneratorTs',
+    secret: process.env.COOKIE_SECRET,
+    options: {
+        httpOnly: true,
+        signed: true,
+        path: (process.env.COOKIE_PATH),
+        maxAge: Number(process.env.COOKIE_EXP),
+        domain: (process.env.COOKIE_DOMAIN),
+        secure: (process.env.SECURE_COOKIE === 'true'),
+    },
+});
