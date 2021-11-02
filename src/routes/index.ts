@@ -10,11 +10,16 @@ import {
 import { getImage } from './Images';
 import { deleteDish, updateDish } from './Dishes';
 import { addOrder, deleteOrder } from './Orders';
+import { getProfile } from './Users';
 
 // Auth router
 const authRouter = Router();
 authRouter.post('/login', login);
 authRouter.get('/logout', logout);
+
+//User router
+const userRouter = Router();
+userRouter.get('/profile', getProfile);
 
 //Restaurant router
 const restaurantRouter = Router();
@@ -40,6 +45,7 @@ orderRouter.delete('/:id', deleteOrder)
 // Export the base-router
 const baseRouter = Router();
 baseRouter.use('/auth', authRouter);
+baseRouter.use('/users',authMW, userRouter);
 baseRouter.use('/restaurants', authMW, restaurantRouter);
 baseRouter.use('/dishes', authMW, dishRouter);
 baseRouter.use('/images', authMW, imageRouter);

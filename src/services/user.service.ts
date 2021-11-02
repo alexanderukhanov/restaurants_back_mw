@@ -4,7 +4,7 @@ const User = module.require('../db/models').User as ReturnType<typeof initUser>;
 
 class UserService {
     public findOne(id: UserAttributes['id']) {
-        return User.findOne({ where: { id } })
+        return User.findOne({ where: { id }, attributes: { exclude: ['password', 'createdAt', 'updatedAt'] } })
     }
 
     public findOneByEmail(email: UserCreationAttributes['email']) {

@@ -4,12 +4,12 @@ import StatusCodes from 'http-status-codes';
 import { JwtService } from '@shared/JwtService';
 import UserService from '../services/user.service';
 import { createUserValidation } from '../validations/userValidation';
-import { cookieProps } from '../types';
+import { cookieProps, CreateUserRequest } from '../types';
 
 const jwtService = new JwtService();
 const { OK, UNAUTHORIZED } = StatusCodes;
 
-export async function login(req: Request, res: Response) {
+export async function login(req: CreateUserRequest, res: Response) {
     const { email, password } = req.body;
 
     const { error } = createUserValidation(req.body)
@@ -21,7 +21,7 @@ export async function login(req: Request, res: Response) {
 
     if (!user) {
         const hashedPassword = await bcrypt.hash(password, 10)
-        const role = email === 'admin@mail.com' && password === 'admin' ? 'admin' : 'user' ;
+        const role = email === 'admin@mail.com' && password === 'admin123' ? 'admin' : 'user' ;
 
         user = await UserService.createUser({ email, password: hashedPassword, role })
     }
@@ -48,7 +48,7 @@ export async function login(req: Request, res: Response) {
 
 export function logout(req: Request, res: Response) {
     const { key, options } = cookieProps;
-    res.clearCookie(key, options);
+    res.clearCookie(key, {...options, maxAge: -1});
     return res.status(OK).end();
 }
 

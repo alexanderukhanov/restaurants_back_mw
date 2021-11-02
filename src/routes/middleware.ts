@@ -21,8 +21,8 @@ export const authMW = async (req: Request, res: Response, next: NextFunction) =>
         if (!clientData) {
             throw Error('JSON-web-token validation failed.');
         }
+        res.locals.user = clientData
         next();
-        console.log(clientData)
     } catch (err) {
         return res.status(UNAUTHORIZED).json({
             error: err.message,

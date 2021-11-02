@@ -4,6 +4,7 @@ import path from 'path';
 import helmet from 'helmet';
 import StatusCodes from 'http-status-codes';
 import express, { NextFunction, Request, Response } from 'express';
+const cors = require('cors');
 
 import 'express-async-errors';
 
@@ -23,6 +24,8 @@ const { BAD_REQUEST } = StatusCodes;
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(cookieProps.secret));
+
+app.use(cors({credentials: true}));
 
 // Show routes called in console during development
 if (process.env.NODE_ENV === 'development') {
@@ -45,31 +48,6 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
         error: err.message,
     });
 });
-
-
-
-/************************************************************************************
- *                              Serve front-end content
- ***********************************************************************************/
-
-const viewsDir = path.join(__dirname, 'views');
-app.set('views', viewsDir);
-const staticDir = path.join(__dirname, 'public');
-app.use(express.static(staticDir));
-
-app.get('/', (req: Request, res: Response) => {
-    res.sendFile('login.html', {root: viewsDir});
-});
-
-app.get('/users', (req: Request, res: Response) => {
-    const jwt = req.signedCookies[cookieProps.key];
-    if (!jwt) {
-        res.redirect('/');
-    } else {
-        res.sendFile('users.html', {root: viewsDir});
-    }
-});
-
 
 
 /************************************************************************************
