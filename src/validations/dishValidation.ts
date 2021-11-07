@@ -5,7 +5,7 @@ import { UpdateDishRequest } from '../types';
 export const createDishValidation = (data: DishCreationAttributes) => (
     Joi.object<DishCreationAttributes>({
             name: Joi.string().required(),
-            cost: Joi.number().required(),
+            cost: Joi.string().required(),
             previewLink: Joi.string().required(),
             description: Joi.string().required(),
             restaurantId: Joi.number(),
@@ -15,7 +15,7 @@ export const createDishValidation = (data: DishCreationAttributes) => (
 export const createDishArrayValidation = (data: DishCreationAttributes[]) => (
     Joi.array().items(Joi.object<DishCreationAttributes>({
             name: Joi.string().required(),
-            cost: Joi.number().required(),
+            cost: Joi.string().required(),
             previewLink: Joi.string().required(),
             description: Joi.string().required(),
             restaurantId: Joi.number(),
@@ -30,7 +30,7 @@ export const updateDishValidation = (data: UpdateDishRequest['body']) => (
                     }
             }).required(),
             name: Joi.string(),
-            cost: Joi.number(),
+            cost: Joi.string(),
             previewLink: Joi.string(),
             description: Joi.string(),
             restaurantId: Joi.number(),

@@ -14,7 +14,7 @@ const Sequelize = require("sequelize");
 const info = {
   revision: 1,
   name: "add-tables",
-  created: "2021-11-01T09:33:42.742Z",
+  created: "2021-11-07T16:06:11.966Z",
   comment: "",
 };
 
@@ -120,7 +120,7 @@ const migrationCommands = (transaction) => [
           field: "previewLink",
           allowNull: false,
         },
-        cost: { type: Sequelize.INTEGER, field: "cost", allowNull: false },
+        cost: { type: Sequelize.STRING, field: "cost", allowNull: false },
         restaurantId: {
           type: Sequelize.INTEGER,
           onUpdate: "CASCADE",
@@ -172,7 +172,7 @@ const migrationCommands = (transaction) => [
           allowNull: false,
         },
         totalCost: {
-          type: Sequelize.INTEGER,
+          type: Sequelize.STRING,
           field: "totalCost",
           allowNull: false,
         },

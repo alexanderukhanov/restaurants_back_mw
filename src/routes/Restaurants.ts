@@ -90,7 +90,7 @@ export async function getAllRestaurants(req: Request, res: Response) {
     return res.status(OK).json(restaurants)
 }
 
-// TODO создатель ресторана/ табличка заказы и связи.
+// TODO создатель ресторана.
 
 // const reader = new FileReader();
 // reader.readAsArrayBuffer(illustrationData.file);

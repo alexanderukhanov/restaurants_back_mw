@@ -6,7 +6,7 @@ export const createRestaurantValidation = (data: RestaurantCreationAttributes) =
     Joi.object<RestaurantCreationAttributes>({
             name: Joi.string().required(),
             previewLink: Joi.string().required(),
-            likes: Joi.number().required(),
+            likes: Joi.number(),
             address: Joi.string().required(),
             type: Joi.string().required(),
     }).validate(data)

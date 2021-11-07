@@ -120,7 +120,7 @@
                 "cost": {
                     "allowNull": false,
                     "field": "cost",
-                    "seqType": "Sequelize.INTEGER"
+                    "seqType": "Sequelize.STRING"
                 },
                 "restaurantId": {
                     "allowNull": false,
@@ -181,7 +181,7 @@
                 "totalCost": {
                     "allowNull": false,
                     "field": "totalCost",
-                    "seqType": "Sequelize.INTEGER"
+                    "seqType": "Sequelize.STRING"
                 },
                 "isPaid": {
                     "allowNull": false,

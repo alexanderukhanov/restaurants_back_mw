@@ -4,7 +4,7 @@ import Joi from 'joi';
 export const createOrderValidation = (data: CreateOrderRequest['body']) => (
     Joi.object<CreateOrderRequest['body']>({
         userId: Joi.number().required(),
-        totalCost: Joi.number().required(),
+        totalCost: Joi.string().required(),
         restaurantId: Joi.number().required(),
         dishIDs: Joi.array().items(Joi.number()).required()
     }).validate(data)

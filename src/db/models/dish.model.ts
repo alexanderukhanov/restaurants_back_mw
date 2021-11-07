@@ -6,7 +6,7 @@ export interface DishAttributes {
     name: string,
     description: string,
     previewLink: string,
-    cost: number,
+    cost: string,
     restaurantId: number,
 }
 
@@ -37,7 +37,7 @@ export const initDish = (sequelize: Sequelize) => (
             allowNull: false,
         },
         cost: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         restaurantId: {

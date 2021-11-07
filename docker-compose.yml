@@ -1,0 +1,23 @@
+version: '3.3'
+
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345
+    ports:
+      - "3307:3306"
+
+  back:
+    build: ./
+    depends_on:
+      - db
+    ports:
+      - "3001:3001"
+
+#      network_mode: host
+
+# docker-compose должен организовать видимость портов между контейнерами но как?
+# как в docker-compose создать образ mysql, затем сразу же создать в ней новую БД "restaurants" (через command?)
+# как стянуть 3 контейнера с dockerHub и после чего перейти к их запуску?

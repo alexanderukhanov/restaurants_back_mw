@@ -6,7 +6,7 @@ export interface OrderAttributes {
     id: number,
     userId: number,
     restaurantId: number,
-    totalCost: number,
+    totalCost: string,
     isPaid: boolean,
     Dishes?: {
         id: number
@@ -38,7 +38,7 @@ export const initOrder = (sequelize: Sequelize) => (
             allowNull: false,
         },
         totalCost: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         isPaid: {
