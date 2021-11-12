@@ -1,5 +1,5 @@
 /**
- * Remove old files, copy front-end ones.
+ * Remove old files, copy.
  */
 
 import fs from 'fs-extra';
@@ -20,6 +20,7 @@ logger.timestamp = false;
 
         // Copy production env file
         await copy('./src/pre-start/env/production.env', './dist/pre-start/env/production.env');
+        await copy('./src/logger/errors.log', './dist/logger/errors.log');
         // Copy back-end files
         await exec('tsc --build tsconfig.prod.json', './')
     } catch (err) {

@@ -2,15 +2,13 @@ FROM node:16.7.0
 
 WORKDIR /app
 
-COPY package.json ./app
+COPY . .
 
 RUN npm install
 
-COPY . .
-
 EXPOSE 3001
 
-CMD ["npm", "run", "start:dev"]
+CMD npm run build && npx sequelize-cli db:migrate --env production && npm run start
 
 # если так, для кеширования - то все горит
 

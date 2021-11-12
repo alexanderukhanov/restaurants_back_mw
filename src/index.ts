@@ -1,15 +1,12 @@
 import './pre-start'; // Must be the first import
-import { DataTypes, Sequelize } from 'sequelize';
+import { Sequelize } from 'sequelize';
 import app from '@server';
 import logger from '@shared/logger';
 
 const sequelize = new Sequelize("restaurants", "root", "12345", {
     dialect: "mysql",
-    host: "localhost",
+    host: process.env.DB_HOST,
     port: Number(process.env.DB_PORT),
-    define: {
-        timestamps: false
-    },
 });
 
 // Start the server

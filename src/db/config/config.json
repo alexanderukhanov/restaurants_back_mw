@@ -16,11 +16,11 @@
     "dialect": "mysql"
   },
   "production": {
-    "port": "3307",
+    "port": "3306",
     "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
+    "password": "12345",
+    "database": "restaurants",
+    "host": "db",
     "dialect": "mysql"
   }
 }
