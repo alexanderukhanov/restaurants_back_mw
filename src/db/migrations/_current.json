@@ -204,6 +204,22 @@
             },
             "indexes": []
         },
+        "UserLikes": {
+            "tableName": "UserLikes",
+            "schema": {
+                "userId": {
+                    "allowNull": false,
+                    "field": "userId",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "restaurantId": {
+                    "allowNull": false,
+                    "field": "restaurantId",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
         "Order_Dish": {
             "tableName": "Order_Dish",
             "schema": {

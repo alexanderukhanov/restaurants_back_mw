@@ -11,6 +11,9 @@ import {
 } from '../validations/restaurantValidation';
 import { createDishArrayValidation } from '../validations/dishValidation';
 
+import { initUserLikes } from '../db/models/userLikes.model';
+const UserLikes = module.require('../db/models').UserLikes as ReturnType<typeof initUserLikes>;
+
 const { NOT_FOUND, CREATED, OK } = StatusCodes;
 
 export async function addRestaurant(req: CreateRestaurantRequest, res: Response) {
@@ -55,9 +58,46 @@ export async function updateRestaurant(req: UpdateRestaurantRequest, res: Respon
         return res.status(NOT_FOUND).end();
     }
 
-    await RestaurantService.update(req)
+    await RestaurantService.update(req.body)
 
     return res.status(OK).end();
+}
+
+export async function updateRestaurantLike(req: UpdateRestaurantRequest, res: Response) {
+    const { id } = req.body;
+    const userId: number = res.locals.user.id;
+
+    const { error } = updateRestaurantValidation(req.body);
+    if (error) {
+        return res.status(400).json(error.message).end();
+    }
+
+
+    const restaurant = await RestaurantService.findOne(id);
+    if (!restaurant) {
+        return res.status(NOT_FOUND).end();
+    }
+
+    const userLikes = await UserLikes.findOne({where:{userId, restaurantId: id}});
+    if (!userLikes) {
+        await RestaurantService.update({
+            ...req.body,
+            likes: restaurant.likes + 1,
+        })
+
+        await UserLikes.create({userId, restaurantId: id});
+
+        return res.status(OK).end();
+    } else {
+        await RestaurantService.update({
+            ...req.body,
+            likes: restaurant.likes -1,
+        });
+
+        await UserLikes.destroy({where: {userId, restaurantId: id}});
+
+        return res.status(OK).end();
+    }
 }
 
 export async function deleteRestaurant(req: Request, res: Response) {
@@ -86,7 +126,9 @@ export async function deleteRestaurant(req: Request, res: Response) {
 }
 
 export async function getAllRestaurants(req: Request, res: Response) {
-    const restaurants = await RestaurantService.findAll();
+    const userId: number | undefined = res.locals?.user?.id;
+    const restaurants = await RestaurantService.findAll(userId);
+
     return res.status(OK).json(restaurants)
 }
 

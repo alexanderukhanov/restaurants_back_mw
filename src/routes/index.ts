@@ -1,11 +1,12 @@
 import { Router } from 'express';
-import { authMW } from './middleware';
+import { authMW, spamMW } from './middleware';
 import { login, logout } from './Auth';
 import {
     addRestaurant,
     deleteRestaurant,
     getAllRestaurants,
-    updateRestaurant
+    updateRestaurant,
+    updateRestaurantLike,
 } from './Restaurants';
 import { getImage } from './Images';
 import { deleteDish, updateDish } from './Dishes';
@@ -23,10 +24,11 @@ userRouter.get('/profile', getProfile);
 
 //Restaurant router
 const restaurantRouter = Router();
-restaurantRouter.get('/all', getAllRestaurants);
-restaurantRouter.post('/add', addRestaurant);
-restaurantRouter.put('/update', updateRestaurant);
-restaurantRouter.delete('/:id', deleteRestaurant);
+restaurantRouter.get('/all', spamMW, getAllRestaurants);
+restaurantRouter.post('/add', authMW, addRestaurant);
+restaurantRouter.put('/update', authMW, updateRestaurant);
+restaurantRouter.put('/likeRestaurant', authMW, spamMW, updateRestaurantLike);
+restaurantRouter.delete('/:id', authMW, deleteRestaurant);
 
 // Image-router
 const imageRouter = Router();
@@ -46,9 +48,9 @@ orderRouter.delete('/:id', deleteOrder)
 const baseRouter = Router();
 baseRouter.use('/auth', authRouter);
 baseRouter.use('/users',authMW, userRouter);
-baseRouter.use('/restaurants', authMW, restaurantRouter);
+baseRouter.use('/restaurants', restaurantRouter);
 baseRouter.use('/dishes', authMW, dishRouter);
-baseRouter.use('/images', authMW, imageRouter);
+baseRouter.use('/images', spamMW, imageRouter);
 baseRouter.use('/orders', authMW, orderRouter);
 
 export default baseRouter;

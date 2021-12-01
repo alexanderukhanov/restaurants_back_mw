@@ -4,6 +4,7 @@ import { initUser } from './user.model';
 import { initRestaurant } from './restaurant.model';
 import { initDish } from './dish.model';
 import { initOrder } from './order.model';
+import { initUserLikes } from './userLikes.model';
 
 const fs = require('fs');
 const path = require('path');
@@ -49,6 +50,8 @@ const User = initUser(sequelize);
 const Restaurant = initRestaurant(sequelize);
 const Dish = initDish(sequelize);
 const Order = initOrder(sequelize);
+const UserLikes = initUserLikes(sequelize);
+UserLikes.removeAttribute('id');
 
 Restaurant.hasOne(Order, { foreignKey: 'restaurantId', onDelete: 'NO ACTION' })
 Dish.belongsToMany(Order, { through: 'Order_Dish' })
@@ -62,3 +65,4 @@ module.exports.User = User;
 module.exports.Restaurant = Restaurant;
 module.exports.Dish = Dish;
 module.exports.Order = Order;
+module.exports.UserLikes = UserLikes;

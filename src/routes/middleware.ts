@@ -6,7 +6,7 @@ import { cookieProps } from '../types';
 
 
 const jwtService = new JwtService();
-const { UNAUTHORIZED } = StatusCodes;
+const { UNAUTHORIZED, FORBIDDEN } = StatusCodes;
 
 export const authMW = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -29,3 +29,25 @@ export const authMW = async (req: Request, res: Response, next: NextFunction) =>
         });
     }
 };
+
+const ips = new Map;
+const limit = 100;
+
+setInterval(() => ips.clear(), 60000);
+
+export const spamMW = async (req: Request, res: Response, next: NextFunction) => {
+    const count = ips.get(req.ip) || 0;
+    if (count < limit) {
+        // parse jwt for like functionality
+        const jwt = req.signedCookies[cookieProps.key];
+        if (jwt && !res.locals?.user) {
+            const clientData = await jwtService.decodeJwt(jwt);
+            if (clientData) res.locals.user = clientData
+        }
+
+        ips.set(req.ip, count +1);
+        next();
+    } else {
+        return res.status(FORBIDDEN).end();
+    }
+}

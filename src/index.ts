@@ -3,7 +3,10 @@ import { Sequelize } from 'sequelize';
 import app from '@server';
 import logger from '@shared/logger';
 
-const sequelize = new Sequelize("restaurants", "root", "12345", {
+export const sequelize = new Sequelize({
+    database: process.env.DB_DATABASE,
+    username: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
     dialect: "mysql",
     host: process.env.DB_HOST,
     port: Number(process.env.DB_PORT),
