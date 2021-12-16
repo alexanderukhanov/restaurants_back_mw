@@ -31,7 +31,7 @@ export async function login(req: CreateUserRequest, res: Response) {
 
     if (!pwdPassed) {
         return res.status(UNAUTHORIZED).json({
-            error: 'loginFailedErr',
+            error: 'Wrong password',
         });
     }
 
