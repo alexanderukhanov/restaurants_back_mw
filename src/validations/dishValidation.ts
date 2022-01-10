@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { DishAttributes, DishCreationAttributes } from '../db/models/dish.model';
+import { DishCreationAttributes } from '../db/models/dish.model';
 import { UpdateDishRequest } from '../types';
 
 export const createDishValidation = (data: DishCreationAttributes) => (
@@ -9,8 +9,8 @@ export const createDishValidation = (data: DishCreationAttributes) => (
             previewLink: Joi.string().required(),
             description: Joi.string().required(),
             restaurantId: Joi.number(),
-    })
-)
+    }).validate(data)
+);
 
 export const createDishArrayValidation = (data: DishCreationAttributes[]) => (
     Joi.array().items(Joi.object<DishCreationAttributes>({
@@ -20,7 +20,7 @@ export const createDishArrayValidation = (data: DishCreationAttributes[]) => (
             description: Joi.string().required(),
             restaurantId: Joi.number(),
     })).validate(data)
-)
+);
 
 export const updateDishValidation = (data: UpdateDishRequest['body']) => (
     Joi.object<UpdateDishRequest['body']>({
@@ -35,7 +35,7 @@ export const updateDishValidation = (data: UpdateDishRequest['body']) => (
             description: Joi.string(),
             restaurantId: Joi.number(),
     }).validate(data)
-)
+);
 
 export const deleteDishValidation = (id: string) => (
     Joi.custom(() => {
@@ -43,4 +43,4 @@ export const deleteDishValidation = (id: string) => (
                     throw new Error('param must be a number')
             }
     }).required().validate(id)
-)
+);

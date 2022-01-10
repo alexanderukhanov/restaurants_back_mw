@@ -9,7 +9,7 @@ export const createRestaurantValidation = (data: RestaurantCreationAttributes) =
             likes: Joi.number(),
             address: Joi.string().required(),
             type: Joi.string().required(),
-    }).validate(data)
+    }).validate(data);
 
 export const updateRestaurantValidation = (data: UpdateRestaurantRequest['body']) =>
     Joi.object<UpdateRestaurantRequest['body']>({
@@ -23,7 +23,7 @@ export const updateRestaurantValidation = (data: UpdateRestaurantRequest['body']
             likes: Joi.number(),
             address: Joi.string(),
             type: Joi.string(),
-    }).validate(data)
+    }).validate(data);
 
 export const deleteRestaurantValidation = (id: string) => (
     Joi.custom(() => {
@@ -31,4 +31,4 @@ export const deleteRestaurantValidation = (id: string) => (
             throw new Error('param must be a number')
         }
     }).required().validate(id)
-)
+);

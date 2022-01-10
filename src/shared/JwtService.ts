@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import randomString from 'randomstring';
 import jsonwebtoken, { VerifyErrors } from 'jsonwebtoken';
-import { cookieProps, IClientData } from '../types';
+import { cookieProps, ClientData } from '../types';
 
-interface IOptions {
+interface Options {
     expiresIn: string;
 }
 
 export class JwtService {
 
     private readonly secret: string;
-    private readonly options: IOptions;
+    private readonly options: Options;
     private readonly VALIDATION_ERROR = 'JSON-web-token validation failed.';
 
 
@@ -25,7 +25,7 @@ export class JwtService {
      *
      * @param data
      */
-    public getJwt(data: IClientData): Promise<string> {
+    public getJwt(data: ClientData): Promise<string> {
         return new Promise((resolve, reject) => {
             jsonwebtoken.sign(data, this.secret, this.options, (err, token) => {
                 err ? reject(err) : resolve(token || '');
@@ -39,10 +39,10 @@ export class JwtService {
      *
      * @param jwt
      */
-    public decodeJwt(jwt: string): Promise<IClientData> {
+    public decodeJwt(jwt: string): Promise<ClientData> {
         return new Promise((res, rej) => {
             jsonwebtoken.verify(jwt, this.secret, (err: VerifyErrors | null, decoded?: object) => {
-                return err ? rej(this.VALIDATION_ERROR) : res(decoded as IClientData);
+                return err ? rej(this.VALIDATION_ERROR) : res(decoded as ClientData);
             });
         });
     }

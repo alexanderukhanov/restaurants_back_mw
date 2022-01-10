@@ -6,6 +6,7 @@ const Sequelize = require("sequelize");
  * createTable() => "Users", deps: []
  * createTable() => "Restaurants", deps: []
  * createTable() => "UserLikes", deps: []
+ * createTable() => "DishInOrders", deps: []
  * createTable() => "Dishes", deps: [Restaurants]
  * createTable() => "Orders", deps: [Restaurants, Users]
  * createTable() => "Order_Dish", deps: [Dishes, Orders]
@@ -15,7 +16,7 @@ const Sequelize = require("sequelize");
 const info = {
   revision: 1,
   name: "add-users-table",
-  created: "2021-12-01T10:59:43.047Z",
+  created: "2022-01-10T15:03:50.782Z",
   comment: "",
 };
 
@@ -109,6 +110,22 @@ const migrationCommands = (transaction) => [
           field: "restaurantId",
           allowNull: false,
         },
+      },
+      { transaction },
+    ],
+  },
+  {
+    fn: "createTable",
+    params: [
+      "DishInOrders",
+      {
+        dishId: { type: Sequelize.INTEGER, field: "dishId", allowNull: false },
+        orderId: {
+          type: Sequelize.INTEGER,
+          field: "orderId",
+          allowNull: false,
+        },
+        amount: { type: Sequelize.INTEGER, field: "amount", allowNull: false },
       },
       { transaction },
     ],
@@ -269,6 +286,10 @@ const rollbackCommands = (transaction) => [
   {
     fn: "dropTable",
     params: ["UserLikes", { transaction }],
+  },
+  {
+    fn: "dropTable",
+    params: ["DishInOrders", { transaction }],
   },
   {
     fn: "dropTable",

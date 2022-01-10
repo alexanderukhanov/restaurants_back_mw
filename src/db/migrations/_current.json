@@ -220,6 +220,27 @@
             },
             "indexes": []
         },
+        "DishInOrders": {
+            "tableName": "DishInOrders",
+            "schema": {
+                "dishId": {
+                    "allowNull": false,
+                    "field": "dishId",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "orderId": {
+                    "allowNull": false,
+                    "field": "orderId",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "amount": {
+                    "allowNull": false,
+                    "field": "amount",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
         "Order_Dish": {
             "tableName": "Order_Dish",
             "schema": {

@@ -8,6 +8,7 @@ export interface OrderAttributes {
     restaurantId: number,
     totalCost: string,
     isPaid: boolean,
+    // logic for 1 dish to 1 order (not using now)
     Dishes?: {
         id: number
     }[]
@@ -18,6 +19,7 @@ export interface OrderCreationAttributes extends Omit<OrderAttributes, 'id' | 'i
 export interface OrderInstance extends Model<
     OrderAttributes, OrderCreationAttributes
 >, OrderAttributes {
+    // logic for 1 dish to 1 order (not using now)
     addDish(dishes: DishInstance[]): Promise<void>;
 }
 

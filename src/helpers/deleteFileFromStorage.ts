@@ -1,10 +1,10 @@
 import fs from 'fs';
 import { rootPath } from '../root-path';
 
-export const deleteFileFromStorage = (previewLink: string) => (
-    fs.unlink(`${rootPath}/assets/${previewLink}`, (err) => {
-        if (err) {
-            throw new Error(err.message)
-        }
-    })
-)
+export const deleteFileFromStorage = (previewLink: string) => {
+    try {
+        fs.unlinkSync(`${rootPath}/assets/${previewLink}`);
+    } catch (e) {
+        throw Error(e.message);
+    }
+}

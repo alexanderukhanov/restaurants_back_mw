@@ -9,7 +9,9 @@ export const saveFileFromBase64 = async (base64: string, entityName: string) => 
     await fs.promises.writeFile(
         `${rootPath}/assets/${fileName}`,
         base64Image[1], { encoding: 'base64' }
-    )
+    ).catch(() => {
+        throw Error('Filed to save media');
+    })
 
     return fileName;
 }

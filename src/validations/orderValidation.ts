@@ -1,14 +1,17 @@
-import { CreateOrderRequest } from '../types';
+import { CreateOrderRequest, DishesInOrder } from '../types';
 import Joi from 'joi';
 
 export const createOrderValidation = (data: CreateOrderRequest['body']) => (
     Joi.object<CreateOrderRequest['body']>({
-        userId: Joi.number().required(),
         totalCost: Joi.string().required(),
         restaurantId: Joi.number().required(),
-        dishIDs: Joi.array().items(Joi.number()).required()
+        dishes: Joi.array().items(Joi.object<DishesInOrder>({
+            id: Joi.number().required(),
+            amount: Joi.number().required(),
+            name: Joi.string().required(),
+        })).required()
     }).validate(data)
-)
+);
 
 export const deleteOrderValidation = (id: string) => (
     Joi.custom(() => {
@@ -16,4 +19,4 @@ export const deleteOrderValidation = (id: string) => (
             throw new Error('param must be a number')
         }
     }).required().validate(id)
-)
+);

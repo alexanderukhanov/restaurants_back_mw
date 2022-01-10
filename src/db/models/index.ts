@@ -5,28 +5,24 @@ import { initRestaurant } from './restaurant.model';
 import { initDish } from './dish.model';
 import { initOrder } from './order.model';
 import { initUserLikes } from './userLikes.model';
+import { initDishInOrder } from './dishInOrder.model';
+import fs from 'fs';
+import { Sequelize } from 'sequelize';
+import path from 'path';
 
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../../../src/db/config/config.json')[env];
 const db = {};
 
-let sequelize: any;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
-}
+const sequelize = new Sequelize(config.database, config.username, config.password, config);
 
 fs
     .readdirSync(__dirname)
-    .filter((file: any) => {
+    .filter((file: string) => {
       return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
     })
-    .forEach((file: any) => {
+    .forEach((file: string) => {
       // @ts-ignore
       const model = Object.values(require(path.join(__dirname, file)))[0](sequelize);
       // @ts-ignore
@@ -52,6 +48,8 @@ const Dish = initDish(sequelize);
 const Order = initOrder(sequelize);
 const UserLikes = initUserLikes(sequelize);
 UserLikes.removeAttribute('id');
+const DishInOrder = initDishInOrder(sequelize);
+DishInOrder.removeAttribute('id');
 
 Restaurant.hasOne(Order, { foreignKey: 'restaurantId', onDelete: 'NO ACTION' })
 Dish.belongsToMany(Order, { through: 'Order_Dish' })
@@ -66,3 +64,4 @@ module.exports.Restaurant = Restaurant;
 module.exports.Dish = Dish;
 module.exports.Order = Order;
 module.exports.UserLikes = UserLikes;
+module.exports.DishInOrder = DishInOrder;

@@ -5,7 +5,7 @@ import { OrderCreationAttributes } from './db/models/order.model';
 
 export type UserRoles = 'user' | 'admin';
 
-export interface IClientData {
+export interface ClientData {
     id: number;
     role: UserRoles;
 }
@@ -29,7 +29,23 @@ export interface CreateUserRequest {
     body: Omit<UserAttributes, 'id' | 'role'>
 }
 
+export interface CreateDish {
+    dishes: Array<Omit<DishCreationAttributes, 'restaurantId'>>,
+    restaurantId: DishCreationAttributes['restaurantId'],
+}
+
+export interface DishesInOrder {
+    id: DishAttributes['id'],
+    name: DishAttributes['name'],
+    amount: number,
+}
+
 export interface CreateOrderRequest {
+    body: Omit<OrderCreationAttributes, 'userId'> &
+        { dishes: Array<DishesInOrder> }
+}
+
+export interface CreateOrder {
     body: OrderCreationAttributes & { dishIDs: Array<DishAttributes['id']> }
 }
 

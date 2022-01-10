@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { authMW, spamMW } from './middleware';
+import { authMiddleWare, spamMiddleWare } from './middleware';
 import { login, logout } from './Auth';
 import {
     addRestaurant,
@@ -24,33 +24,33 @@ userRouter.get('/profile', getProfile);
 
 //Restaurant router
 const restaurantRouter = Router();
-restaurantRouter.get('/all', spamMW, getAllRestaurants);
-restaurantRouter.post('/add', authMW, addRestaurant);
-restaurantRouter.put('/update', authMW, updateRestaurant);
-restaurantRouter.put('/likeRestaurant', authMW, spamMW, updateRestaurantLike);
-restaurantRouter.delete('/:id', authMW, deleteRestaurant);
+restaurantRouter.get('/all', spamMiddleWare, getAllRestaurants);
+restaurantRouter.post('/add', authMiddleWare, addRestaurant);
+restaurantRouter.put('/update', authMiddleWare, updateRestaurant);
+restaurantRouter.put('/likeRestaurant', authMiddleWare, spamMiddleWare, updateRestaurantLike);
+restaurantRouter.delete('/:id', authMiddleWare, deleteRestaurant);
 
 // Image-router
 const imageRouter = Router();
-imageRouter.get('/:name', getImage)
+imageRouter.get('/:name', getImage);
 
 // Dish-router
 const dishRouter = Router();
-dishRouter.put('/update', updateDish)
-dishRouter.delete('/:id', deleteDish)
+dishRouter.put('/update', updateDish);
+dishRouter.delete('/:id', deleteDish);
 
 // Order-router
 const orderRouter = Router();
-orderRouter.post('/add', addOrder)
-orderRouter.delete('/:id', deleteOrder)
+orderRouter.post('/add', addOrder);
+orderRouter.delete('/:id', deleteOrder);
 
 // Export the base-router
 const baseRouter = Router();
 baseRouter.use('/auth', authRouter);
-baseRouter.use('/users',authMW, userRouter);
+baseRouter.use('/users',authMiddleWare, userRouter);
 baseRouter.use('/restaurants', restaurantRouter);
-baseRouter.use('/dishes', authMW, dishRouter);
-baseRouter.use('/images', spamMW, imageRouter);
-baseRouter.use('/orders', authMW, orderRouter);
+baseRouter.use('/dishes', authMiddleWare, dishRouter);
+baseRouter.use('/images', spamMiddleWare, imageRouter);
+baseRouter.use('/orders', authMiddleWare, orderRouter);
 
 export default baseRouter;
