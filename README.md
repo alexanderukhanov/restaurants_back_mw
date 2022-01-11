@@ -51,5 +51,5 @@ Wipe project from pc
 $ docker-compose rm
 $ docker volume rm back_db-data
 $ docker rmi alexanderukhanov/back alexanderukhanov/front
-$ docker rmi mysql
+$ docker rmi mysql node
 ```
