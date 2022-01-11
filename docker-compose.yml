@@ -46,6 +46,3 @@ networks:
 
 #      network_mode: host
 
-# docker-compose должен организовать видимость портов между контейнерами но как?(bridge/host)
-# как в docker-compose создать образ mysql, затем сразу же создать в ней новую БД "restaurants" (через command?)
-# как стянуть 3 контейнера с dockerHub и после чего перейти к их запуску?

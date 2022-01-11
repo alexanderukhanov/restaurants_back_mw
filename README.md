@@ -9,28 +9,25 @@ Install dependencies
 $ npm install
 ```
 
-Create DB to use with app
-
-Run migrations 
-```bash
-$ yarn run typeorm migration:run
-```
-
-Apply seeds
-```bash
-$ yarn run seed
-```
-
 Run app (more info in the 'pakage.json' file, scripts section)
 ```bash
-$ yarn run start
+$ npm run start:dev
 ```
 
 ## Data Base
+Example full cycle of migrations
+
 ```bash
 $ npm run build => sequelize-mig migration:make -n add-users-table
 => npx sequelize-cli db:migrate
 ```
+
+Create migrations using changes
+(app has to be built with these changes before)
+```bash
+$ sequelize-mig migration:make -n <migration name>
+```
+
 Apply migrations
 
 ```bash
@@ -43,38 +40,16 @@ Revert last migration
 $ npx sequelize-cli db:migrate:undo
 ```
 
-Apply seed
+Docker create and start
 ```bash
-$ yarn run seed
+$ docker build -t alexanderukhanov/back .
+$ docker push alexanderukhanov/back
+$ docker-compose up
 ```
-
-Drop tables in DB, just clear all data in tables
+Wipe project from pc
 ```bash
-$ yarn run drop-tables
+$ docker-compose rm
+$ docker volume rm back_db-data
+$ docker rmi alexanderukhanov/back alexanderukhanov/front
+$ docker rmi mysql
 ```
-
-Create migrations using changes in TypeORM entities
-(app has to be built with these changes before)
-```bash
-$ sequelize-mig migration:make -n <migration name>
-
-```
-
-## Running the app 
-
-Development
-```bash
-$ yarn run start
-```
-Watch mode
-```bash
-$ yarn run start:dev
-```
-Production mode
-```bash
-$ yarn run start:prod
-```
-
-## Learn More
-This project was created with <a href="http://nestjs.com/" target="blank">NestJS</a> framework.<br>
-For work with DB (MySQL) - <a href="https://typeorm.io/" target="blank">TypeORM</a>.
