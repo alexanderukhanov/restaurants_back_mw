@@ -44,6 +44,8 @@ Docker create and start
 ```bash
 $ docker build -t alexanderukhanov/back .
 $ docker push alexanderukhanov/back
+$ docker build -t alexanderukhanov/front .
+$ docker push alexanderukhanov/front
 $ docker-compose up
 ```
 Wipe project from pc
