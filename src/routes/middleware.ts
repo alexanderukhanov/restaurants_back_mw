@@ -1,7 +1,8 @@
 import StatusCodes from 'http-status-codes';
 import { Request, Response, NextFunction } from 'express';
-import { JwtService } from '@shared/JwtService';
+import { JwtService } from '../helpers/JwtService';
 import { cookieProps } from '../types';
+
 const jwtService = new JwtService();
 const { UNAUTHORIZED, FORBIDDEN } = StatusCodes;
 
@@ -24,15 +25,15 @@ export const authMiddleWare = async (req: Request, res: Response, next: NextFunc
         next();
     } catch (err) {
         return res.status(UNAUTHORIZED).json({
-            error: err.message,
+            error: err.message || err,
         });
     }
 };
 
 const ips = new Map;
-const limit = 100;
+const limit = 500;
 
-setInterval(() => ips.clear(), 60000);
+const timer = setInterval(() => ips.clear(), 60000);
 
 export const spamMiddleWare = async (req: Request, res: Response, next: NextFunction) => {
     const count = ips.get(req.ip) || 0;
@@ -54,3 +55,5 @@ export const spamMiddleWare = async (req: Request, res: Response, next: NextFunc
         return res.status(FORBIDDEN).end();
     }
 }
+
+timer.unref();

@@ -77,7 +77,7 @@ export async function updateRestaurantLike(req: UpdateRestaurantRequest, res: Re
         return res.status(NOT_FOUND).end();
     }
 
-    const userLikes = await UserLikes.findOne({where:{userId, restaurantId: id}});
+    const userLikes = await UserLikes.findOne({where:{ userId, restaurantId: id }});
 
     if (!userLikes) {
         await RestaurantService.update({

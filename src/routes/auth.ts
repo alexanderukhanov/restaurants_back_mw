@@ -1,10 +1,13 @@
 import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
 import StatusCodes from 'http-status-codes';
-import { JwtService } from '@shared/JwtService';
+
+import { JwtService } from '../helpers/JwtService';
 import UserService from '../services/user.service';
 import { createUserValidation } from '../validations/userValidation';
 import { cookieProps, CreateUserRequest } from '../types';
+import { ADMIN_EMAIL, ADMIN_PASSWORD } from "../constants";
+
 const jwtService = new JwtService();
 const { OK, UNAUTHORIZED } = StatusCodes;
 
@@ -20,7 +23,7 @@ export async function login(req: CreateUserRequest, res: Response) {
 
     if (!user) {
         const hashedPassword = await bcrypt.hash(password, 10);
-        const role = email === 'admin@mail.com' && password === 'admin123' ? 'admin' : 'user' ;
+        const role = email === ADMIN_EMAIL && password === ADMIN_PASSWORD ? 'admin' : 'user' ;
 
         user = await UserService.createUser({ email, password: hashedPassword, role });
     }

@@ -1,21 +1,27 @@
 'use strict';
+import fs from "fs";
+import { Sequelize } from "sequelize";
+import path from "path";
 
-import { initUser } from './user.model';
-import { initRestaurant } from './restaurant.model';
-import { initDish } from './dish.model';
-import { initOrder } from './order.model';
-import { initUserLikes } from './userLikes.model';
-import { initDishInOrder } from './dishInOrder.model';
-import fs from 'fs';
-import { Sequelize } from 'sequelize';
-import path from 'path';
+import { initUser } from "./user.model";
+import { initRestaurant } from "./restaurant.model";
+import { initDish } from "./dish.model";
+import { initOrder } from "./order.model";
+import { initUserLikes } from "./userLikes.model";
+import { initDishInOrder } from "./dishInOrder.model";
 
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../../../src/db/config/config.json')[env];
-const db = {};
+const db = <Record<string, any>>{};
 
-const sequelize = new Sequelize(config.database, config.username, config.password, config);
+export const sequelize = new Sequelize({
+    database: process.env.DB_DATABASE,
+    username: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    dialect: "mysql",
+    host: process.env.DB_HOST,
+    port: Number(process.env.DB_PORT),
+    logging: false,
+});
 
 fs
     .readdirSync(__dirname)
@@ -23,23 +29,17 @@ fs
       return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
     })
     .forEach((file: string) => {
-      // @ts-ignore
-      const model = Object.values(require(path.join(__dirname, file)))[0](sequelize);
-      // @ts-ignore
+      const model = (Object.values(require(path.join(__dirname, file)))[0] as Function)(sequelize);
       db[model.name] = model;
     });
 
 Object.keys(db).forEach(modelName => {
-  // @ts-ignore
   if (db[modelName].associate) {
-    // @ts-ignore
     db[modelName].associate(db);
   }
 });
 
-// @ts-ignore
 db.sequelize = sequelize;
-// @ts-ignore
 db.Sequelize = Sequelize;
 
 const User = initUser(sequelize);

@@ -14,7 +14,7 @@ class UserService {
         return User.findOne({ where: { email } })
     }
 
-    public createUser({email, password, role }: UserCreationAttributes) {
+    public createUser({ email, password, role }: UserCreationAttributes) {
         return User.create({ password, role, email })
     }
 }

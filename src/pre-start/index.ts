@@ -18,6 +18,12 @@ import commandLineArgs from 'command-line-args';
             defaultValue: 'development',
             type: String,
         },
+        {
+            name: 'runInBand',
+            alias: 'j',
+            defaultValue: 'development',
+            type: String,
+        }
     ]);
     // Set the env file
     const result = dotenv.config({

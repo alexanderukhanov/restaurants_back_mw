@@ -1,7 +1,8 @@
-import { RestaurantAttributes, RestaurantCreationAttributes } from './db/models/restaurant.model';
-import { DishAttributes, DishCreationAttributes } from './db/models/dish.model';
-import { UserAttributes } from './db/models/user.model';
-import { OrderCreationAttributes } from './db/models/order.model';
+import "./pre-start"; // Must be the first import
+import { RestaurantAttributes, RestaurantCreationAttributes } from "./db/models/restaurant.model";
+import { DishAttributes, DishCreationAttributes } from "./db/models/dish.model";
+import { UserAttributes } from "./db/models/user.model";
+import { OrderCreationAttributes } from "./db/models/order.model";
 
 export type UserRoles = 'user' | 'admin';
 
@@ -62,4 +63,3 @@ export const cookieProps = {
         secure: (process.env.SECURE_COOKIE === 'true'),
     }
 }
-

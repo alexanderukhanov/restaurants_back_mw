@@ -1,17 +1,17 @@
 import { Router } from 'express';
 import { authMiddleWare, spamMiddleWare } from './middleware';
-import { login, logout } from './Auth';
+import { login, logout } from './auth';
 import {
     addRestaurant,
     deleteRestaurant,
     getAllRestaurants,
     updateRestaurant,
     updateRestaurantLike,
-} from './Restaurants';
-import { getImage } from './Images';
-import { deleteDish, updateDish } from './Dishes';
-import { addOrder, deleteOrder } from './Orders';
-import { getProfile } from './Users';
+} from './restaurants';
+import { getImage } from './images';
+import { deleteDish, updateDish } from './dishes';
+import { addOrder, deleteOrder } from './orders';
+import { getProfile } from './users';
 
 // Auth router
 const authRouter = Router();

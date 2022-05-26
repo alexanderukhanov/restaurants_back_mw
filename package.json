@@ -6,8 +6,10 @@
     "lint": "eslint . --ext .ts",
     "start": "node -r module-alias/register ./dist --env=production",
     "start:dev": "nodemon",
-    "test": "nodemon --config ./spec/nodemon.json",
-    "test:no-reloading": "./node_modules/.bin/ts-node --files -r tsconfig-paths/register ./spec"
+    "test": "jest --runInBand"
+  },
+  "jest": {
+    "preset": "ts-jest"
   },
   "nodemonConfig": {
     "watch": [
@@ -105,9 +107,11 @@
     "find": "^0.3.0",
     "fs-extra": "^10.0.0",
     "jasmine": "^3.9.0",
+    "jest": "^28.1.0",
     "nodemon": "^2.0.12",
     "sequelize-cli": "^6.2.0",
-    "supertest": "^6.1.6",
+    "supertest": "^6.2.3",
+    "ts-jest": "^28.0.2",
     "ts-node": "^10.2.1",
     "tsconfig-paths": "^3.10.1",
     "typescript": "^4.3.5"

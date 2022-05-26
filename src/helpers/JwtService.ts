@@ -1,22 +1,19 @@
-/* eslint-disable @typescript-eslint/ban-types */
-import randomString from 'randomstring';
-import jsonwebtoken, { VerifyErrors } from 'jsonwebtoken';
-import { cookieProps, ClientData } from '../types';
+import jsonwebtoken, { VerifyErrors } from "jsonwebtoken";
+import { ClientData, cookieProps } from "../types";
+import { generatedJwtSecret } from "../constants";
 
 interface Options {
     expiresIn: string;
 }
 
 export class JwtService {
-
     private readonly secret: string;
     private readonly options: Options;
     private readonly VALIDATION_ERROR = 'JSON-web-token validation failed.';
 
-
     constructor() {
-        this.secret = (process.env.JWT_SECRET || randomString.generate(100));
-        this.options = {expiresIn: cookieProps.options.maxAge.toString()};
+        this.secret = (process.env.JWT_SECRET || generatedJwtSecret);
+        this.options = {expiresIn: String(cookieProps.options.maxAge || 259200000)};
     }
 
 

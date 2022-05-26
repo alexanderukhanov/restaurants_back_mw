@@ -1,4 +1,3 @@
-import { sequelize } from '../index';
 import { QueryTypes } from 'sequelize';
 
 import {
@@ -8,6 +7,7 @@ import {
     RestaurantInstance,
 } from '../db/models/restaurant.model';
 import { initDish } from '../db/models/dish.model';
+import { sequelize } from "../db/models";
 
 import { saveFileFromBase64 } from '../helpers/saveFileFromBase64';
 import { UpdateRestaurantRequest } from '../types';
@@ -54,7 +54,6 @@ class RestaurantService {
     public delete(id: RestaurantAttributes['id']) {
         return Restaurant.destroy({ where: { id } })
     }
-
 }
 
 export default new RestaurantService();
