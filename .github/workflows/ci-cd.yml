@@ -43,6 +43,7 @@ jobs:
           docker push alexanderukhanov/back
           
       - name: deploy
+        uses: appleboy/ssh-action@master
         with:
           host: $SSH_HOST
           username: $SSH_USERNAME
