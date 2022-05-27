@@ -12,6 +12,9 @@ jobs:
     env:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      SSH_HOST: ${{ secrets.SSH_HOST }}
+      SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+      SSH_KEY: ${{ secrets.SSH_KEY }}
     services:
       mysql:
         image: mysql:5.7
@@ -38,3 +41,10 @@ jobs:
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
           docker build -t alexanderukhanov/back .
           docker push alexanderukhanov/back
+          
+      - name: deploy
+        with:
+          host: $SSH_HOST
+          username: $SSH_USERNAME
+          key: $SSH_KEY
+          script: touch success.txt
