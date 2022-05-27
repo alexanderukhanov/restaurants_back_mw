@@ -10,10 +10,8 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     env:
-      DOCKER_USERNAME: ${{ secrets.ci-cd.DOCKER_USERNAME }}
-      DOCKER_PASSWORD: ${{ secrets.ci-cd.DOCKER_PASSWORD }}
-      DOCKER_USERNAME1: ${{ context.DOCKER_USERNAME }}
-      DOCKER_PASSWORD1: ${{ context.DOCKER_PASSWORD }}
+      DOCKER_USERNAME: OLEG
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
     services:
       mysql:
         image: mysql:5.7
@@ -28,10 +26,10 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16.15.0
+      - run: echo $DOCKER_USERNAME $DOCKER_PASSWORD
       - run: npm ci
       - run: npx sequelize-cli db:migrate
       - run: npm test
-      - run: echo $DOCKER_USERNAME $DOCKER_PASSWORD $DOCKER_USERNAME1 $DOCKER_PASSWORD1
       - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
       - run: docker build -t alexanderukhanov/back .
       - run: docker push alexanderukhanov/back
