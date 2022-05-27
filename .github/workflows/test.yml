@@ -24,6 +24,7 @@ jobs:
         image: mysql:5.7
         env:
           MYSQL_ROOT_PASSWORD: 12345
+          MYSQL_DATABASE: restaurants
         ports:
         - 3307:3306
 
@@ -35,5 +36,6 @@ jobs:
         with:
           node-version: 16.15.0
       - run: sudo apt-get install -y mysql-client
+      - run: npx sequelize-cli db:migrate
       - run: npm ci
       - run: npm test
