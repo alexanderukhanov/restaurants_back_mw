@@ -28,11 +28,13 @@ jobs:
           node-version: 16.15.0
           
       - name: test
-      - run: npm ci
-      - run: npx sequelize-cli db:migrate
-      - run: npm test
+        run: |
+          npm ci
+          npx sequelize-cli db:migrate
+          npm test
       
       - name: push
-      - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-      - run: docker build -t alexanderukhanov/back .
-      - run: docker push alexanderukhanov/back
+        run: |
+          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+          docker build -t alexanderukhanov/back .
+          docker push alexanderukhanov/back
