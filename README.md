@@ -14,7 +14,7 @@ Run app (more info in the 'pakage.json' file, scripts section)
 $ npm run start:dev
 ```
 
-## Data Base
+## Database
 Example full cycle of migrations
 
 ```bash

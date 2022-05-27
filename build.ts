@@ -22,7 +22,7 @@ logger.timestamp = false;
         await copy('./src/pre-start/env/production.env', './dist/pre-start/env/production.env');
         await copy('./src/logger/errors.log', './dist/logger/errors.log');
         // Copy back-end files
-        await copy('./src/assets', './dist/assets');
+        await copy('./src/assets/.gitkeep', './dist/assets/.gitkeep');
         await exec('tsc --build tsconfig.prod.json', './')
     } catch (err) {
         logger.err(err);
