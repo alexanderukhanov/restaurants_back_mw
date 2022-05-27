@@ -68,7 +68,7 @@ describe('dish service', () => {
 
         expect(findOneResult?.restaurantId).toEqual(restaurantId);
         expect(findOneResult?.userId).toEqual(userId);
-        expect(findOneResult?.totalCost).toEqual(TEST_TOTAL_COST);
+        expect(findOneResult?.totalCost).toEqual("TEST_TOTAL_COST");
     });
 
     afterAll(async () => await clearDB());
