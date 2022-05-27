@@ -1,4 +1,4 @@
-name: test
+name: ci-cd
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  test_push_deploy:
     runs-on: ubuntu-20.04
     env:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
@@ -26,10 +26,13 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16.15.0
-      - run: echo $DOCKER_USERNAME $DOCKER_PASSWORD
+          
+      - name: test
       - run: npm ci
       - run: npx sequelize-cli db:migrate
       - run: npm test
+      
+      - name: push
       - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
       - run: docker build -t alexanderukhanov/back .
       - run: docker push alexanderukhanov/back
