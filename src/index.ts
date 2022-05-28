@@ -1,6 +1,6 @@
 import "./pre-start"; // Must be the first import
-import app from "../src/Server";
-import logger from "../src/shared/logger";
+import app from "./Server";
+import logger from "./shared/logger";
 import { sequelize } from "./db/models";
 
 // Start the server

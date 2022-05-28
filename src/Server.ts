@@ -7,7 +7,7 @@ const cors = require('cors');
 import 'express-async-errors';
 
 import BaseRouter from './routes';
-import logger from '../src/shared/logger';
+import logger from './shared/logger';
 import { cookieProps } from './types';
 
 const app = express();
