@@ -48,4 +48,4 @@ jobs:
           host: $SSH_HOST
           username: $SSH_USERNAME
           key: $SSH_KEY
-          script: touch success.txt
+          script: touch success_back.txt
