@@ -41,11 +41,11 @@ jobs:
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
           docker build -t alexanderukhanov/back .
           docker push alexanderukhanov/back
-          
-      - name: deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: $SSH_HOST
-          username: $SSH_USERNAME
-          key: $SSH_KEY
-          script: touch success_back.txt
+
+#      - name: deploy
+#        uses: appleboy/ssh-action@master
+#        with:
+#          host: $SSH_HOST
+#          username: $SSH_USERNAME
+#          key: $SSH_KEY
+#          script: touch success_back.txt
