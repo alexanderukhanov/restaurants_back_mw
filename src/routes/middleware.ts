@@ -41,7 +41,9 @@ export const spamMiddleWare = async (req: Request, res: Response, next: NextFunc
         // parse jwt for like functionality
         const jwt = req.signedCookies[cookieProps.key];
 
-        if (jwt && !res.locals?.user) {
+        // in order to see active like for unprotected getAllRestaurants
+        const isGetAllRestaurants = req.originalUrl === '/api/restaurants/all';
+        if (jwt && isGetAllRestaurants && !res.locals?.user) {
             const clientData = await jwtService.decodeJwt(jwt);
 
             if (clientData) {

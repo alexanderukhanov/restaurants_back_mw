@@ -4,8 +4,7 @@ import app from "../src/Server";
 import {
     ADMIN_EMAIL,
     TEST_ADMIN_ROLE,
-    TEST_EMAIL,
-    TEST_PASSWORD
+    TEST_EMAIL
 } from "../src/constants";
 import UserService from "../src/services/user.service";
 import { clearDB, loginAsAdmin, loginAsUser } from "./index";

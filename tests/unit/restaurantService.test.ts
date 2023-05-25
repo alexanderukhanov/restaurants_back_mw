@@ -15,7 +15,6 @@ describe('restaurant service', () => {
         await clearDB();
     });
 
-    // yes, this is integration test.
     it('add', async () => {
         const restaurant = await RestaurantService.add({
             name: generatedJwtSecret,

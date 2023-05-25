@@ -37,8 +37,8 @@ class RestaurantService {
     public async findAll(userId: number | undefined) {
         const restaurants: Array<RestaurantInstance & {isLiked: number}> = await sequelize.query(`
              select r.*, if (ul.restaurantId is not null, 1, 0) as isLiked
-             from Restaurants r 
-             left join UserLikes ul on ul.userId = ? 
+             from Restaurants r
+             left join UserLikes ul on ul.userId = ?
              and ul.restaurantId = r.id
              order by r.id asc`,
             {replacements: [userId], type: QueryTypes.SELECT}
@@ -48,7 +48,7 @@ class RestaurantService {
         return restaurants.map(restaurant => ({
             ...restaurant,
             Dishes: dishes.filter(dish => dish.restaurantId === restaurant.id)
-        }))
+        }));
     }
 
     public delete(id: RestaurantAttributes['id']) {

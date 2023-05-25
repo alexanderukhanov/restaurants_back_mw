@@ -7,7 +7,7 @@ import DishService from '../services/dish.service';
 import RestaurantService from '../services/restaurant.service';
 import UserService from '../services/user.service';
 import { initDishInOrder } from '../db/models/dishInOrder.model';
-const { NOT_FOUND, CREATED, OK, PAYMENT_REQUIRED } = StatusCodes;
+const { NOT_FOUND, CREATED, OK, BAD_REQUEST } = StatusCodes;
 
 const DishInOrder = module.require('../db/models').DishInOrder as ReturnType<typeof initDishInOrder>
 
@@ -21,11 +21,11 @@ export async function addOrder(req: CreateOrderRequest, res: Response) {
     }
 
     const verifiedDishes = await DishService.findByIDs(dishes.map(dish => dish.id));
-    const unfoundedDishes = dishes
+    const unfoundDishes = dishes
         .filter(({ id }) => !verifiedDishes.some(dish => dish.id === id));
 
-    if (unfoundedDishes.length) {
-        return res.status(NOT_FOUND).json(`Dish with name '${unfoundedDishes[0].name}' not found!`);
+    if (unfoundDishes.length) {
+        return res.status(NOT_FOUND).json(`Dish with name '${unfoundDishes[0].name}' not found!`);
     }
 
     const verifiedDishesWithAmount = verifiedDishes.map(({id, cost}) => ({
@@ -38,7 +38,7 @@ export async function addOrder(req: CreateOrderRequest, res: Response) {
         .reduce((acc, {cost, amount}) => (acc + (Number(cost) * amount)), 0);
 
     if (calculatedTotalCost !== Number(totalCost)) {
-        return res.status(PAYMENT_REQUIRED).json(`The total cost isn't correct`);
+        return res.status(BAD_REQUEST).json(`The total cost isn't correct`);
     }
 
     const restaurant = await RestaurantService.findOne(restaurantId);

@@ -2,7 +2,7 @@ import request from 'supertest';
 
 import app from "../src/Server";
 import UserService from "../src/services/user.service";
-import { TEST_EMAIL, TEST_PASSWORD } from "../src/constants";
+import { TEST_EMAIL } from "../src/constants";
 import { clearDB, loginAsUser } from "./index";
 
 describe('Users', () => {

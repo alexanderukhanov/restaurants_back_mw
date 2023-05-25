@@ -29,7 +29,7 @@ export async function login(req: CreateUserRequest, res: Response) {
     }
 
     // Check password
-    const pwdPassed =  bcrypt.compareSync(password, user.password);
+    const pwdPassed = bcrypt.compareSync(password, user.password);
 
     if (!pwdPassed) {
         return res.status(UNAUTHORIZED).json({

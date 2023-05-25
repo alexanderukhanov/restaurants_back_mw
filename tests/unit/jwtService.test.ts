@@ -1,7 +1,7 @@
 import { JwtService } from "../../src/helpers/JwtService";
 import { TEST_USER_ID, TEST_USER_ROLE } from "../../src/constants";
 
-describe('Jwt service', () => {
+describe('jwt service', () => {
     const jwtService = new JwtService();
     let jwt = '';
 

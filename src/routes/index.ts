@@ -47,7 +47,7 @@ orderRouter.delete('/:id', deleteOrder);
 // Export the base-router
 const baseRouter = Router();
 baseRouter.use('/auth', authRouter);
-baseRouter.use('/users',authMiddleWare, userRouter);
+baseRouter.use('/users', authMiddleWare, userRouter);
 baseRouter.use('/restaurants', restaurantRouter);
 baseRouter.use('/dishes', authMiddleWare, dishRouter);
 baseRouter.use('/images', spamMiddleWare, imageRouter);

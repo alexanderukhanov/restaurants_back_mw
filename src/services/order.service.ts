@@ -12,7 +12,7 @@ class OrderService {
             restaurantId,
             totalCost,
             userId,
-        })
+        });
         // logic for 1 dish to 1 order (not using now)
         // await order.addDish(dishes)
 

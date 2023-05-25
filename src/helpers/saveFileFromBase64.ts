@@ -12,7 +12,7 @@ export const saveFileFromBase64 = async (base64: string, entityName: string) => 
         { encoding: 'base64' }
     ).catch((e) => {
         throw Error(e.message);
-    })
+    });
 
     return fileName;
 }

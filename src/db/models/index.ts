@@ -51,11 +51,11 @@ UserLikes.removeAttribute('id');
 const DishInOrder = initDishInOrder(sequelize);
 DishInOrder.removeAttribute('id');
 
-Restaurant.hasOne(Order, { foreignKey: 'restaurantId', onDelete: 'NO ACTION' })
-Dish.belongsToMany(Order, { through: 'Order_Dish' })
-Order.belongsToMany(Dish, { through: 'Order_Dish' })
-User.hasOne(Order, { foreignKey: 'userId'})
-Restaurant.hasMany(Dish, { foreignKey: 'restaurantId' })
+Restaurant.hasOne(Order, { foreignKey: 'restaurantId', onDelete: 'NO ACTION' });
+Dish.belongsToMany(Order, { through: 'Order_Dish' });
+Order.belongsToMany(Dish, { through: 'Order_Dish' });
+User.hasOne(Order, { foreignKey: 'userId'});
+Restaurant.hasMany(Dish, { foreignKey: 'restaurantId' });
 
 module.exports = db;
 

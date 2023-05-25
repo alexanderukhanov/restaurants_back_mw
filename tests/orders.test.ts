@@ -38,7 +38,7 @@ describe('Orders', () => {
                 }
             ],
             totalCost
-        }
+        };
 
         const response = await loginAsAdmin();
 

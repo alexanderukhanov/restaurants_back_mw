@@ -7,7 +7,7 @@ import { initDishInOrder } from "../../src/db/models/dishInOrder.model";
 
 const DishInOrder = module.require('../../src/db/models').DishInOrder as ReturnType<typeof initDishInOrder>;
 
-describe('dish service', () => {
+describe('order service', () => {
     let restaurantId: number;
     let userId: number;
     let orderId: number;

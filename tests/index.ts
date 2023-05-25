@@ -77,6 +77,5 @@ export const addRestaurantForTest = async () => {
         .set('Cookie', response.headers['set-cookie'])
         .send(data);
 
-
     return res.status;
 };
