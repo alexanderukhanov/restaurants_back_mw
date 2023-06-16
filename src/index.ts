@@ -10,5 +10,4 @@ sequelize.authenticate().then(() => {
     app.listen(port, () => {
         logger.info('Express server started on port: ' + port);
     });
-}).catch(err => console.log(err))
-
+}).catch(err => console.log(err));

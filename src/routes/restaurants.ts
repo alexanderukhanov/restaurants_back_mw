@@ -86,8 +86,6 @@ export async function updateRestaurantLike(req: UpdateRestaurantRequest, res: Re
         });
 
         await UserLikes.create({userId, restaurantId: id});
-
-        return res.status(OK).end();
     } else {
         await RestaurantService.update({
             ...req.body,
@@ -95,9 +93,9 @@ export async function updateRestaurantLike(req: UpdateRestaurantRequest, res: Re
         });
 
         await UserLikes.destroy({where: {userId, restaurantId: id}});
-
-        return res.status(OK).end();
     }
+
+    return res.status(OK).end();
 }
 
 export async function deleteRestaurant(req: Request, res: Response) {
